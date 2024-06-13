@@ -1,102 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const TILE_TYPES = {
-        GRASS: 'grass',
-        SIDEWALK: 'sidewalk',
-        ROAD: 'road',
-        NEIGHBORHOOD: 'neighborhood',
-        NOTHING: 'nothing',
-    };
+import { TILE_TYPES, PATTERN_RULES } from './patternRules.js';
 
-    const NEIGHBORHOOD_SIZE = 4;
+document.addEventListener('DOMContentLoaded', () => {
+    const NEIGHBORHOOD_SIZE = 8;
     const SIDEWALK_SIZE = 1;
     const ROAD_SIZE = 2;
-    const BORDER_SIZE = 1;
+    const BORDER_SIZE = 2;
 
     const TILE_SIZE = { width: 62, height: 32 }; // Dimensions of the tile images
     const TILE_IMAGES = {};
-
-    const PATTERN_RULES = [
-        {
-            pattern: [
-                [undefined, undefined, undefined],
-                [undefined, TILE_TYPES.GRASS, undefined],
-                [undefined, undefined, undefined],
-            ],
-            image: 'assets/tiles/grass.png'
-        },
-        {
-            pattern: [
-                [undefined, undefined, undefined],
-                [undefined, TILE_TYPES.NOTHING, undefined],
-                [undefined, undefined, undefined],
-            ],
-            image: 'assets/tiles/grass.png'
-        },
-        {
-            pattern: [
-                [undefined, undefined, undefined],
-                [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
-                [undefined, undefined, undefined],
-            ],
-            image: 'assets/tiles/sidewalk-horizontal.png'
-        },
-        {
-            pattern: [
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-            ],
-            image: 'assets/tiles/sidewalk-vertical.png'
-        },
-        {
-            pattern: [
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-                [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
-                [undefined, undefined, undefined],
-            ],
-            image: 'assets/tiles/sidewalk-corner-0.png'
-        },
-        {
-            pattern: [
-                [undefined, undefined, undefined],
-                [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, undefined],
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-            ],
-            image: 'assets/tiles/sidewalk-corner-180.png'
-        },
-        {
-            pattern: [
-                [undefined, TILE_TYPES.ROAD, undefined],
-                [undefined, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
-                [undefined, TILE_TYPES.ROAD, undefined],
-            ],
-            image: 'assets/tiles/road-vertical-b.png'
-        },
-        {
-            pattern: [
-                [undefined, TILE_TYPES.ROAD, undefined],
-                [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, undefined],
-                [undefined, TILE_TYPES.ROAD, undefined],
-            ],
-            image: 'assets/tiles/road-vertical-a.png'
-        },
-        {
-            pattern: [
-                [undefined, undefined, undefined],
-                [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-            ],
-            image: 'assets/tiles/road-horizontal-a.png'
-        },
-        {
-            pattern: [
-                [undefined, TILE_TYPES.SIDEWALK, undefined],
-                [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-                [undefined, undefined, undefined],
-            ],
-            image: 'assets/tiles/road-horizontal-b.png'
-        },
-    ];
 
     function loadImages(tileTypes, callback) {
         let loadedImages = 0;
@@ -185,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (match) return image;
         }
 
-        return `assets/tiles/default.png`;
+        return `assets/tiles/${map[y][x]}.png`;
     }
 
 
