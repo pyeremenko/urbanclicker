@@ -1,7 +1,7 @@
 import { TILE_TYPES, PATTERN_RULES } from './patternRules.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const NEIGHBORHOOD_SIZE = 8;
+    const NEIGHBORHOOD_SIZE = 6;
     const SIDEWALK_SIZE = 1;
     const ROAD_SIZE = 2;
     const BORDER_SIZE = 2;
@@ -44,7 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                map[neighborhoodStartY][neighborhoodStartX] = TILE_TYPES.NEIGHBORHOOD;
+                for (let k = 0; k < NEIGHBORHOOD_SIZE; k+=2) {
+                    for (let l = 0; l < NEIGHBORHOOD_SIZE; l+=2) {
+                        if (Math.random() > 0.24) {
+                            map[neighborhoodStartY + k][neighborhoodStartX + l] = TILE_TYPES.NEIGHBORHOOD;
+                        }
+                    }
+                }
 
                 for (let y = -1; y <= NEIGHBORHOOD_SIZE; y++) {
                     map[neighborhoodStartY + y][neighborhoodStartX - 1] = TILE_TYPES.SIDEWALK;
@@ -120,17 +126,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function drawObjects(ctx, map) {
+        ctx.imageSmoothingEnabled = false;
+        const halfTileWidth = TILE_SIZE.width / 2;
+        const halfTileHeight = TILE_SIZE.height / 2;
+
+        for (let y = 0; y < map.length; y++) {
+            for (let x = 0; x < map[y].length; x++) {
+                if (map[y][x] === TILE_TYPES.NEIGHBORHOOD) {
+                    const img = new Image();
+                    img.src = `assets/objects/house-${Math.floor(Math.random() * 3) + 1}.png`;
+                    img.onload = () => {
+                        const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
+                        const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
+
+                        ctx.drawImage(img, isoX - 32, isoY - 137, 126, 200);
+                    };
+                }
+            }
+        }
+    }
+
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    const neighborhoodCount = 4;
+    const neighborhoodCount = 9;
     const map = generateMap(neighborhoodCount);
 
+    const objects = [];
+
     loadImages(TILE_TYPES, () => {
-        // Resize canvas based on the map size
         canvas.width = map[0].length * TILE_SIZE.width + 100;
         canvas.height = map.length * TILE_SIZE.height + 100;
 
         drawMap(ctx, map);
+        drawObjects(ctx, map, objects);
     });
 });
