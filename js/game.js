@@ -15,6 +15,89 @@ document.addEventListener('DOMContentLoaded', () => {
     const TILE_SIZE = { width: 62, height: 32 }; // Dimensions of the tile images
     const TILE_IMAGES = {};
 
+    const PATTERN_RULES = [
+        {
+            pattern: [
+                [undefined, undefined, undefined],
+                [undefined, TILE_TYPES.GRASS, undefined],
+                [undefined, undefined, undefined],
+            ],
+            image: 'assets/tiles/grass.png'
+        },
+        {
+            pattern: [
+                [undefined, undefined, undefined],
+                [undefined, TILE_TYPES.NOTHING, undefined],
+                [undefined, undefined, undefined],
+            ],
+            image: 'assets/tiles/grass.png'
+        },
+        {
+            pattern: [
+                [undefined, undefined, undefined],
+                [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
+                [undefined, undefined, undefined],
+            ],
+            image: 'assets/tiles/sidewalk-horizontal.png'
+        },
+        {
+            pattern: [
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+            ],
+            image: 'assets/tiles/sidewalk-vertical.png'
+        },
+        {
+            pattern: [
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+                [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
+                [undefined, undefined, undefined],
+            ],
+            image: 'assets/tiles/sidewalk-corner-0.png'
+        },
+        {
+            pattern: [
+                [undefined, undefined, undefined],
+                [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, undefined],
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+            ],
+            image: 'assets/tiles/sidewalk-corner-180.png'
+        },
+        {
+            pattern: [
+                [undefined, TILE_TYPES.ROAD, undefined],
+                [undefined, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
+                [undefined, TILE_TYPES.ROAD, undefined],
+            ],
+            image: 'assets/tiles/road-vertical-b.png'
+        },
+        {
+            pattern: [
+                [undefined, TILE_TYPES.ROAD, undefined],
+                [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, undefined],
+                [undefined, TILE_TYPES.ROAD, undefined],
+            ],
+            image: 'assets/tiles/road-vertical-a.png'
+        },
+        {
+            pattern: [
+                [undefined, undefined, undefined],
+                [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+            ],
+            image: 'assets/tiles/road-horizontal-a.png'
+        },
+        {
+            pattern: [
+                [undefined, TILE_TYPES.SIDEWALK, undefined],
+                [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+                [undefined, undefined, undefined],
+            ],
+            image: 'assets/tiles/road-horizontal-b.png'
+        },
+    ];
+
     function loadImages(tileTypes, callback) {
         let loadedImages = 0;
         const totalImages = Object.keys(tileTypes).length;
@@ -79,6 +162,33 @@ document.addEventListener('DOMContentLoaded', () => {
         return map;
     }
 
+    function matchPattern(map, x, y) {
+        for (const rule of PATTERN_RULES) {
+            const { pattern, image } = rule;
+            let match = true;
+
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    const tileX = x + dx;
+                    const tileY = y + dy;
+                    const patternTile = pattern[dy + 1][dx + 1];
+                    const mapTile = (map[tileY] && map[tileY][tileX]) || undefined;
+
+                    if (patternTile !== undefined && patternTile !== mapTile) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (!match) break;
+            }
+
+            if (match) return image;
+        }
+
+        return `assets/tiles/default.png`;
+    }
+
+
     function drawMap(ctx, map) {
         ctx.imageSmoothingEnabled = false;
         const halfTileWidth = TILE_SIZE.width / 2;
@@ -86,15 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
-                const tileType = map[y][x];
-                const img = TILE_IMAGES[tileType];
-
-                if (img.complete) {
+                const imgSrc = matchPattern(map, x, y);
+                const img = new Image();
+                img.src = imgSrc;
+                img.onload = () => {
                     const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
                     const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
 
                     ctx.drawImage(img, isoX, isoY, TILE_SIZE.width, TILE_SIZE.height);
-                }
+                };
             }
         }
     }
