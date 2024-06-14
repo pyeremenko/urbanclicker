@@ -1,13 +1,13 @@
 import { TILE_TYPES, PATTERN_RULES } from './patternRules.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const NEIGHBORHOOD_SIZE = 6;
+    const NEIGHBORHOOD_SIZE = 8;
     const SIDEWALK_SIZE = 1;
     const ROAD_SIZE = 2;
     const BORDER_SIZE = 3;
 
-    const TILE_SIZE = { width: 62, height: 32 }; // Dimensions of the tile images
-    const OBJECT_TYPES = ['house-1.png', 'house-2.png', 'house-3.png', 'house-4.png', 'house-5.png', 'house-6.png', 'house-7.png', 'house-8.png', 'parking-3.png'];
+    const TILE_SIZE = {width: 62, height: 32}; // Dimensions of the tile images
+    const OBJECT_TYPES = ['house-1.png', 'house-2.png', 'house-3.png', 'house-4.png', 'house-5.png', 'house-6.png', 'house-7.png', 'house-8.png', 'house-9.png', 'parking-3.png', 'park-1.png'];
     const IMAGE_STORAGE = {};
 
     function collectFilenames() {
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    const neighborhoodCount = 4;
+    const neighborhoodCount = 9;
     const map = generateMap(neighborhoodCount);
 
     const filenames = collectFilenames();
