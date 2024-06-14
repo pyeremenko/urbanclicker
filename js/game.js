@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const BORDER_SIZE = 3;
 
     const TILE_SIZE = { width: 62, height: 32 }; // Dimensions of the tile images
+    const OBJECT_TYPES = ['house-1.png', 'house-2.png', 'house-3.png', 'house-4.png', 'house-5.png', 'house-6.png', 'house-7.png', 'house-8.png', 'parking-3.png'];
     const IMAGE_STORAGE = {};
 
     function collectFilenames() {
@@ -20,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             filenames.add(rule.image);
         }
 
-        const OBJECT_TYPES = ['house-1.png', 'house-2.png', 'house-3.png', 'house-4.png', 'house-5.png', 'house-6.png', 'house-7.png', 'house-8.png'];
         OBJECT_TYPES.forEach(type => {
             filenames.add(`assets/objects/${type}`);
         });
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
                 if (map[y][x] === TILE_TYPES.NEIGHBORHOOD) {
-                    const imgSrc = `assets/objects/house-${Math.floor(Math.random() * 8) + 1}.png`;
+                    const imgSrc = `assets/objects/${OBJECT_TYPES[Math.floor(Math.random() * OBJECT_TYPES.length)]}`;
                     const img = IMAGE_STORAGE[imgSrc];
 
                     if (img) {
