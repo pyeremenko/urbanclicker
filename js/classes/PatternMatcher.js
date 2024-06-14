@@ -168,6 +168,22 @@ const PATTERN_RULES = [
         ],
         image: 'assets/tiles/road-cross-90.png'
     },
+    {
+        pattern: [
+            [TILE_TYPES.GRASS, TILE_TYPES.GRASS, TILE_TYPES.GRASS],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.GRASS],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.GRASS],
+        ],
+        image: 'assets/tiles/road-corner-180.png'
+    },
+    {
+        pattern: [
+            [TILE_TYPES.GRASS, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.GRASS, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.GRASS, TILE_TYPES.GRASS, TILE_TYPES.GRASS],
+        ],
+        image: 'assets/tiles/road-corner-0.png'
+    },
 ];
 
 class PatternMatcher {
@@ -178,13 +194,15 @@ class PatternMatcher {
     matchPattern(map, x, y) {
         for (const rule of this.patternRules) {
             const { pattern, image } = rule;
+            const patternSize = pattern.length;
+            const offset = Math.floor(patternSize / 2);
             let match = true;
 
-            for (let dy = -1; dy <= 1; dy++) {
-                for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -offset; dy <= offset; dy++) {
+                for (let dx = -offset; dx <= offset; dx++) {
                     const tileX = x + dx;
                     const tileY = y + dy;
-                    const patternTile = pattern[dy + 1][dx + 1];
+                    const patternTile = pattern[dy + offset][dx + offset];
                     const mapTile = (map[tileY] && map[tileY][tileX]) || undefined;
 
                     if (patternTile !== undefined && patternTile !== mapTile) {
