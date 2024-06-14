@@ -170,4 +170,36 @@ const PATTERN_RULES = [
     },
 ];
 
-export { TILE_TYPES, PATTERN_RULES };
+class PatternMatcher {
+    constructor(patternRules) {
+        this.patternRules = patternRules;
+    }
+
+    matchPattern(map, x, y) {
+        for (const rule of this.patternRules) {
+            const { pattern, image } = rule;
+            let match = true;
+
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    const tileX = x + dx;
+                    const tileY = y + dy;
+                    const patternTile = pattern[dy + 1][dx + 1];
+                    const mapTile = (map[tileY] && map[tileY][tileX]) || undefined;
+
+                    if (patternTile !== undefined && patternTile !== mapTile) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (!match) break;
+            }
+
+            if (match) return image;
+        }
+
+        return `assets/tiles/${map[y][x]}.png`;
+    }
+}
+
+export { TILE_TYPES, PATTERN_RULES, PatternMatcher };
