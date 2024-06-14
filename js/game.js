@@ -4,23 +4,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const NEIGHBORHOOD_SIZE = 6;
     const SIDEWALK_SIZE = 1;
     const ROAD_SIZE = 2;
-    const BORDER_SIZE = 2;
+    const BORDER_SIZE = 3;
 
     const TILE_SIZE = { width: 62, height: 32 }; // Dimensions of the tile images
-    const TILE_IMAGES = {};
+    const IMAGE_STORAGE = {};
 
-    function loadImages(tileTypes, callback) {
+    function collectFilenames() {
+        const filenames = new Set();
+
+        for (const type in TILE_TYPES) {
+            filenames.add(`assets/tiles/${TILE_TYPES[type]}.png`);
+        }
+
+        for (const rule of PATTERN_RULES) {
+            filenames.add(rule.image);
+        }
+
+        const OBJECT_TYPES = ['house-1.png', 'house-2.png', 'house-3.png', 'house-4.png', 'house-5.png', 'house-6.png', 'house-7.png', 'house-8.png'];
+        OBJECT_TYPES.forEach(type => {
+            filenames.add(`assets/objects/${type}`);
+        });
+
+        return Array.from(filenames);
+    }
+
+    function preloadImages(filenames, callback) {
         let loadedImages = 0;
-        const totalImages = Object.keys(tileTypes).length;
-        Object.keys(tileTypes).forEach(type => {
+        const totalImages = filenames.length;
+
+        filenames.forEach(filename => {
             const img = new Image();
-            img.src = `assets/tiles/${tileTypes[type]}.png`;
+            img.src = filename;
             img.onload = () => {
                 if (++loadedImages >= totalImages) {
                     callback();
                 }
             };
-            TILE_IMAGES[tileTypes[type]] = img;
+            img.onerror = () => {
+                console.error(`Failed to load image: ${filename}`);
+            };
+            IMAGE_STORAGE[filename] = img;
         });
     }
 
@@ -44,9 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                for (let k = 0; k < NEIGHBORHOOD_SIZE; k+=2) {
-                    for (let l = 0; l < NEIGHBORHOOD_SIZE; l+=2) {
-                        if (Math.random() > 0.24) {
+                for (let k = 0; k < NEIGHBORHOOD_SIZE; k += 2) {
+                    for (let l = 0; l < NEIGHBORHOOD_SIZE; l += 2) {
+                        if (Math.random() > 0.04) {
                             map[neighborhoodStartY + k][neighborhoodStartX + l] = TILE_TYPES.NEIGHBORHOOD;
                         }
                     }
@@ -105,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return `assets/tiles/${map[y][x]}.png`;
     }
 
-
     function drawMap(ctx, map) {
         ctx.imageSmoothingEnabled = false;
         const halfTileWidth = TILE_SIZE.width / 2;
@@ -114,14 +136,15 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
                 const imgSrc = matchPattern(map, x, y);
-                const img = new Image();
-                img.src = imgSrc;
-                img.onload = () => {
+                const img = IMAGE_STORAGE[imgSrc];
+
+                if (img) {
                     const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
                     const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
-
                     ctx.drawImage(img, isoX, isoY, TILE_SIZE.width, TILE_SIZE.height);
-                };
+                } else {
+                    console.error(`Missing image for source: ${imgSrc}`);
+                }
             }
         }
     }
@@ -134,14 +157,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
                 if (map[y][x] === TILE_TYPES.NEIGHBORHOOD) {
-                    const img = new Image();
-                    img.src = `assets/objects/house-${Math.floor(Math.random() * 3) + 1}.png`;
-                    img.onload = () => {
+                    const imgSrc = `assets/objects/house-${Math.floor(Math.random() * 8) + 1}.png`;
+                    const img = IMAGE_STORAGE[imgSrc];
+
+                    if (img) {
                         const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
                         const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
-
                         ctx.drawImage(img, isoX - 32, isoY - 137, 126, 200);
-                    };
+                    } else {
+                        console.error(`Missing image for source: ${imgSrc}`);
+                    }
                 }
             }
         }
@@ -150,16 +175,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    const neighborhoodCount = 9;
+    const neighborhoodCount = 4;
     const map = generateMap(neighborhoodCount);
 
-    const objects = [];
+    const filenames = collectFilenames();
 
-    loadImages(TILE_TYPES, () => {
+    preloadImages(filenames, () => {
         canvas.width = map[0].length * TILE_SIZE.width + 100;
         canvas.height = map.length * TILE_SIZE.height + 100;
 
         drawMap(ctx, map);
-        drawObjects(ctx, map, objects);
+        drawObjects(ctx, map);
     });
 });
