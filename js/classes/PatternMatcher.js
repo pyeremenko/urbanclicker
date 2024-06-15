@@ -1,3 +1,5 @@
+import {ROAD_DIRECTION} from "./Road.js";
+
 const TILE_TYPES = {
     GRASS: 'grass',
     SIDEWALK: 'sidewalk',
@@ -6,14 +8,14 @@ const TILE_TYPES = {
     NOTHING: 'nothing',
 };
 
-const PATTERN_RULES = [
+const TILE_IMAGE_PATTERN_RULES = [
     {
         pattern: [
             [undefined, undefined, undefined],
             [undefined, TILE_TYPES.GRASS, undefined],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/grass.png'
+        value: 'assets/tiles/grass.png'
     },
     {
         pattern: [
@@ -21,7 +23,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.NOTHING, undefined],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/grass.png'
+        value: 'assets/tiles/grass.png'
     },
     {
         pattern: [
@@ -29,7 +31,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/sidewalk-horizontal.png'
+        value: 'assets/tiles/sidewalk-horizontal.png'
     },
     {
         pattern: [
@@ -37,7 +39,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.SIDEWALK, undefined],
             [undefined, TILE_TYPES.SIDEWALK, undefined],
         ],
-        image: 'assets/tiles/sidewalk-vertical.png'
+        value: 'assets/tiles/sidewalk-vertical.png'
     },
     {
         pattern: [
@@ -45,7 +47,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/sidewalk-corner-0.png'
+        value: 'assets/tiles/sidewalk-corner-0.png'
     },
     {
         pattern: [
@@ -53,7 +55,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, undefined],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/sidewalk-corner-270.png'
+        value: 'assets/tiles/sidewalk-corner-270.png'
     },
     {
         pattern: [
@@ -61,7 +63,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK, undefined],
             [undefined, TILE_TYPES.SIDEWALK, undefined],
         ],
-        image: 'assets/tiles/sidewalk-corner-180.png'
+        value: 'assets/tiles/sidewalk-corner-180.png'
     },
     {
         pattern: [
@@ -69,7 +71,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.SIDEWALK],
             [undefined, TILE_TYPES.SIDEWALK, undefined],
         ],
-        image: 'assets/tiles/sidewalk-corner-90.png'
+        value: 'assets/tiles/sidewalk-corner-90.png'
     },
     {
         pattern: [
@@ -77,7 +79,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
             [undefined, TILE_TYPES.ROAD, undefined],
         ],
-        image: 'assets/tiles/road-vertical-b.png'
+        value: 'assets/tiles/road-vertical-b.png'
     },
     {
         pattern: [
@@ -85,7 +87,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, undefined],
             [undefined, TILE_TYPES.ROAD, undefined],
         ],
-        image: 'assets/tiles/road-vertical-a.png'
+        value: 'assets/tiles/road-vertical-a.png'
     },
     {
         pattern: [
@@ -93,7 +95,7 @@ const PATTERN_RULES = [
             [undefined, TILE_TYPES.ROAD, TILE_TYPES.GRASS],
             [undefined, TILE_TYPES.ROAD, undefined],
         ],
-        image: 'assets/tiles/road-vertical-b.png'
+        value: 'assets/tiles/road-vertical-b.png'
     },
     {
         pattern: [
@@ -101,7 +103,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.GRASS, TILE_TYPES.ROAD, undefined],
             [undefined, TILE_TYPES.ROAD, undefined],
         ],
-        image: 'assets/tiles/road-vertical-a.png'
+        value: 'assets/tiles/road-vertical-a.png'
     },
 
     {
@@ -110,7 +112,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [undefined, TILE_TYPES.SIDEWALK, undefined],
         ],
-        image: 'assets/tiles/road-horizontal-a.png'
+        value: 'assets/tiles/road-horizontal-a.png'
     },
     {
         pattern: [
@@ -118,7 +120,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/road-horizontal-b.png'
+        value: 'assets/tiles/road-horizontal-b.png'
     },
     {
         pattern: [
@@ -126,7 +128,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [undefined, TILE_TYPES.GRASS, undefined],
         ],
-        image: 'assets/tiles/road-horizontal-a.png'
+        value: 'assets/tiles/road-horizontal-a.png'
     },
     {
         pattern: [
@@ -134,7 +136,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [undefined, undefined, undefined],
         ],
-        image: 'assets/tiles/road-horizontal-b.png'
+        value: 'assets/tiles/road-horizontal-b.png'
     },
     {
         pattern: [
@@ -142,7 +144,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
         ],
-        image: 'assets/tiles/road-cross-0.png'
+        value: 'assets/tiles/road-cross-0.png'
     },
     {
         pattern: [
@@ -150,7 +152,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
         ],
-        image: 'assets/tiles/road-cross-270.png'
+        value: 'assets/tiles/road-cross-270.png'
     },
     {
         pattern: [
@@ -158,7 +160,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
         ],
-        image: 'assets/tiles/road-cross-180.png'
+        value: 'assets/tiles/road-cross-180.png'
     },
     {
         pattern: [
@@ -166,7 +168,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
         ],
-        image: 'assets/tiles/road-cross-90.png'
+        value: 'assets/tiles/road-cross-90.png'
     },
     {
         pattern: [
@@ -174,7 +176,7 @@ const PATTERN_RULES = [
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.GRASS],
             [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.GRASS],
         ],
-        image: 'assets/tiles/road-corner-180.png'
+        value: 'assets/tiles/road-corner-180.png'
     },
     {
         pattern: [
@@ -182,7 +184,82 @@ const PATTERN_RULES = [
             [TILE_TYPES.GRASS, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
             [TILE_TYPES.GRASS, TILE_TYPES.GRASS, TILE_TYPES.GRASS],
         ],
-        image: 'assets/tiles/road-corner-0.png'
+        value: 'assets/tiles/road-corner-0.png'
+    },
+];
+
+const ROAD_DIRECTION_PATTERN_RULES = [
+    {
+        pattern: [
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
+        ],
+        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.RIGHT],
+    },
+    {
+        pattern: [
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+        ],
+        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.LEFT],
+    },
+    {
+        pattern: [
+            [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+        ],
+        value: [ROAD_DIRECTION.LEFT, ROAD_DIRECTION.DOWN],
+    },
+    {
+        pattern: [
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, undefined],
+        ],
+        value: [ROAD_DIRECTION.RIGHT, ROAD_DIRECTION.DOWN],
+    },
+    {
+        pattern: [
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.UP],
+    },
+    {
+        pattern: [
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+        ],
+        value: [ROAD_DIRECTION.DOWN],
+    },
+    {
+        pattern: [
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, TILE_TYPES.SIDEWALK, undefined, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.LEFT],
+    },
+    {
+        pattern: [
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, undefined, TILE_TYPES.SIDEWALK, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.RIGHT],
     },
 ];
 
@@ -193,7 +270,7 @@ class PatternMatcher {
 
     matchPattern(map, x, y) {
         for (const rule of this.patternRules) {
-            const { pattern, image } = rule;
+            const { pattern, value } = rule;
             const patternSize = pattern.length;
             const offset = Math.floor(patternSize / 2);
             let match = true;
@@ -213,11 +290,11 @@ class PatternMatcher {
                 if (!match) break;
             }
 
-            if (match) return image;
+            if (match) return value;
         }
 
-        return `assets/tiles/${map[y][x].type}.png`;
+        return undefined;
     }
 }
 
-export { TILE_TYPES, PATTERN_RULES, PatternMatcher };
+export {TILE_TYPES, TILE_IMAGE_PATTERN_RULES, ROAD_DIRECTION_PATTERN_RULES, PatternMatcher};

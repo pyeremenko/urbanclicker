@@ -1,4 +1,4 @@
-import { TILE_TYPES, PATTERN_RULES } from './PatternMatcher.js';
+import { TILE_TYPES, TILE_IMAGE_PATTERN_RULES } from './PatternMatcher.js';
 
 class ImageLoader {
     constructor(objectTypes) {
@@ -15,8 +15,8 @@ class ImageLoader {
         }
 
         // Collect filenames from PATTERN_RULES
-        for (const rule of PATTERN_RULES) {
-            filenames.add(rule.image);
+        for (const rule of TILE_IMAGE_PATTERN_RULES) {
+            filenames.add(rule.value);
         }
 
         // Collect filenames for objects

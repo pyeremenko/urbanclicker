@@ -11,7 +11,7 @@ class MapRenderer {
 
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
-                const imgSrc = this.patternMatcher.matchPattern(map, x, y);
+                const imgSrc = this.patternMatcher.matchPattern(map, x, y) ?? `assets/tiles/${map[y][x].type}.png`;
                 const img = imageStorage[imgSrc];
 
                 if (img) {

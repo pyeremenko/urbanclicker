@@ -1,11 +1,12 @@
 import { TILE_TYPES } from './PatternMatcher.js';
 
 class MapGenerator {
-    constructor(neighborhoodSize, sidewalkSize, roadSize, borderSize) {
+    constructor(neighborhoodSize, sidewalkSize, roadSize, borderSize, patternMatcher) {
         this.neighborhoodSize = neighborhoodSize;
         this.sidewalkSize = sidewalkSize;
         this.roadSize = roadSize;
         this.borderSize = borderSize;
+        this.patternMatcher = patternMatcher;
     }
 
     generateBaseMap(neighborhoodCount) {
@@ -61,6 +62,21 @@ class MapGenerator {
         }
 
         return map;
+    }
+
+    fillMapMetadata(map) {
+        for (let y = 0; y < map.length; y++) {
+            for (let x = 0; x < map[y].length; x++) {
+                const cell = map[y][x];
+                if (cell.type === TILE_TYPES.ROAD) {
+                    const possibleDirections = this.patternMatcher.matchPattern(map, x, y);
+                    if (possibleDirections) {
+                        cell.properties.possibleDirections = possibleDirections;
+                    }
+                }
+            }
+        }
+        console.table(map.map(row => row.map(cell => cell?.properties?.possibleDirections)));
     }
 
     cell(cellType) {
