@@ -1,6 +1,7 @@
-import TileMap from './classes/TileMap.js';
-import ObjectRenderer from './classes/ObjectRenderer.js';
 import ImageLoader from './classes/ImageLoader.js';
+import MapGenerator from "./classes/MapGenerator.js";
+import MapRenderer from './classes/MapRenderer.js';
+import ObjectRenderer from './classes/ObjectRenderer.js';
 import { PATTERN_RULES, PatternMatcher } from './classes/PatternMatcher.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,24 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const TILE_SIZE = { width: 62, height: 32 };
 
     const patternMatcher = new PatternMatcher(PATTERN_RULES);
-    const tileMap = new TileMap(TILE_SIZE, NEIGHBORHOOD_SIZE, SIDEWALK_SIZE, ROAD_SIZE, BORDER_SIZE, patternMatcher);
+    const mapGenerator = new MapGenerator(NEIGHBORHOOD_SIZE, SIDEWALK_SIZE, ROAD_SIZE, BORDER_SIZE);
+    const mapRenderer = new MapRenderer(TILE_SIZE, patternMatcher);
     const objectRenderer = new ObjectRenderer(TILE_SIZE, OBJECT_TYPES);
     const imageLoader = new ImageLoader(OBJECT_TYPES);
 
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    const map = tileMap.generateMap(NEIGHBORHOOD_COUNT);
-
     const filenames = imageLoader.collectFilenames();
 
     imageLoader.preloadImages(filenames, () => {
         const imageStorage = imageLoader.getImageStorage();
+        const map = mapGenerator.generateBaseMap(NEIGHBORHOOD_COUNT);
 
         canvas.width = map[0].length * TILE_SIZE.width + 100;
         canvas.height = map.length * TILE_SIZE.height + 100;
 
-        tileMap.drawMap(ctx, map, imageStorage);
+        mapRenderer.drawMap(ctx, map, imageStorage);
         objectRenderer.drawObjects(ctx, map, imageStorage);
     });
 });
