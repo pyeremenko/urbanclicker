@@ -205,7 +205,7 @@ class PatternMatcher {
                     const patternTile = pattern[dy + offset][dx + offset];
                     const mapTile = (map[tileY] && map[tileY][tileX]) || undefined;
 
-                    if (patternTile !== undefined && patternTile !== mapTile) {
+                    if (patternTile !== undefined && patternTile !== mapTile.type) {
                         match = false;
                         break;
                     }
@@ -216,7 +216,7 @@ class PatternMatcher {
             if (match) return image;
         }
 
-        return `assets/tiles/${map[y][x]}.png`;
+        return `assets/tiles/${map[y][x].type}.png`;
     }
 }
 

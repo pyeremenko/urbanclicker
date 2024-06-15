@@ -1,3 +1,5 @@
+import { TILE_TYPES } from './PatternMatcher.js';
+
 class ObjectRenderer {
     constructor(tileSize, objectTypes) {
         this.tileSize = tileSize;
@@ -11,7 +13,7 @@ class ObjectRenderer {
 
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
-                if (map[y][x] === 'neighborhood') { // assuming TILE_TYPES.NEIGHBORHOOD is 'neighborhood'
+                if (map[y][x].type === TILE_TYPES.NEIGHBORHOOD) {
                     const imgSrc = `assets/objects/${this.objectTypes[Math.floor(Math.random() * this.objectTypes.length)]}`;
                     const img = imageStorage[imgSrc];
 
