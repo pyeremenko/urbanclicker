@@ -1,12 +1,13 @@
 import { TILE_TYPES } from './PatternMatcher.js';
 
 class MapGenerator {
-    constructor(neighborhoodSize, sidewalkSize, roadSize, borderSize, patternMatcher) {
+    constructor(neighborhoodSize, sidewalkSize, roadSize, borderSize, patternMatcher, objectTypes) {
         this.neighborhoodSize = neighborhoodSize;
         this.sidewalkSize = sidewalkSize;
         this.roadSize = roadSize;
         this.borderSize = borderSize;
         this.patternMatcher = patternMatcher;
+        this.objectTypes = objectTypes;
     }
 
     generateBaseMap(neighborhoodCount) {
@@ -74,6 +75,9 @@ class MapGenerator {
                         cell.properties.possibleDirections = possibleDirections;
                     }
                 }
+                if (cell.type === TILE_TYPES.NEIGHBORHOOD) {
+                    cell.properties.imageSrc = `assets/objects/${this.objectTypes[Math.floor(Math.random() * this.objectTypes.length)]}`;
+                }
             }
         }
 
@@ -101,6 +105,7 @@ class MapGenerator {
             type: cellType,
             properties: {
                 possibleDirections: [],
+                imageSrc: `/assets/tiles/${cellType}.png`,
             },
         };
     }

@@ -2,10 +2,13 @@ import ImageLoader from './classes/ImageLoader.js';
 import MapGenerator from "./classes/MapGenerator.js";
 import MapRenderer from './classes/MapRenderer.js';
 import ObjectRenderer from './classes/ObjectRenderer.js';
-import {ROAD_DIRECTION_PATTERN_RULES, TILE_IMAGE_PATTERN_RULES, PatternMatcher} from './classes/PatternMatcher.js';
+import animateTrip from './trip.js';
+// import Pathfinding from './classes/Pathfinding.js';
+// import Car from './classes/Car.js';
+import { ROAD_DIRECTION_PATTERN_RULES, TILE_IMAGE_PATTERN_RULES, PatternMatcher } from './classes/PatternMatcher.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const NEIGHBORHOOD_COUNT = 4;
+    const NEIGHBORHOOD_COUNT = 9;
     const NEIGHBORHOOD_SIZE = 6;
     const SIDEWALK_SIZE = 1;
     const ROAD_SIZE = 2;
@@ -16,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const imagePatternMatcher = new PatternMatcher(TILE_IMAGE_PATTERN_RULES);
     const directionPatternMatcher = new PatternMatcher(ROAD_DIRECTION_PATTERN_RULES);
-    const mapGenerator = new MapGenerator(NEIGHBORHOOD_SIZE, SIDEWALK_SIZE, ROAD_SIZE, BORDER_SIZE, directionPatternMatcher);
+    const mapGenerator = new MapGenerator(NEIGHBORHOOD_SIZE, SIDEWALK_SIZE, ROAD_SIZE, BORDER_SIZE, directionPatternMatcher, OBJECT_TYPES);
     const mapRenderer = new MapRenderer(TILE_SIZE, imagePatternMatcher);
-    const objectRenderer = new ObjectRenderer(TILE_SIZE, OBJECT_TYPES);
+    const objectRenderer = new ObjectRenderer(TILE_SIZE);
     const imageLoader = new ImageLoader(OBJECT_TYPES);
 
     const canvas = document.getElementById('gameCanvas');
@@ -36,5 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mapRenderer.drawMap(ctx, map, imageStorage);
         objectRenderer.drawObjects(ctx, map, imageStorage);
+
+        animateTrip(canvas, ctx, map, imageStorage, mapRenderer, objectRenderer, TILE_SIZE, {x: 18, y: 23}, {x: 21, y: 14});
     });
 });

@@ -1,9 +1,8 @@
 import { TILE_TYPES } from './PatternMatcher.js';
 
 class ObjectRenderer {
-    constructor(tileSize, objectTypes) {
+    constructor(tileSize) {
         this.tileSize = tileSize;
-        this.objectTypes = objectTypes;
     }
 
     drawObjects(ctx, map, imageStorage) {
@@ -14,8 +13,7 @@ class ObjectRenderer {
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
                 if (map[y][x].type === TILE_TYPES.NEIGHBORHOOD) {
-                    const imgSrc = `assets/objects/${this.objectTypes[Math.floor(Math.random() * this.objectTypes.length)]}`;
-                    const img = imageStorage[imgSrc];
+                    const img = imageStorage[map[y][x].properties.imageSrc];
 
                     if (img) {
                         const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;

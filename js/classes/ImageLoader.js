@@ -24,6 +24,8 @@ class ImageLoader {
             filenames.add(`assets/objects/${type}`);
         });
 
+        filenames.add('assets/objects/car.png');
+
         return Array.from(filenames);
     }
 
