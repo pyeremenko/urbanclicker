@@ -191,76 +191,206 @@ const TILE_IMAGE_PATTERN_RULES = [
 const ROAD_DIRECTION_PATTERN_RULES = [
     {
         pattern: [
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [undefined, undefined, undefined, undefined, undefined],
         ],
-        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.RIGHT],
-    },
-    {
-        pattern: [
-            [undefined, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-        ],
-        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.LEFT],
-    },
-    {
-        pattern: [
-            [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-        ],
-        value: [ROAD_DIRECTION.LEFT, ROAD_DIRECTION.DOWN],
-    },
-    {
-        pattern: [
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, undefined],
-        ],
-        value: [ROAD_DIRECTION.RIGHT, ROAD_DIRECTION.DOWN],
+        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.RIGHT]
     },
     {
         pattern: [
             [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
             [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
-            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.SIDEWALK, undefined],
-            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [
+                undefined,
+                [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK],
+                [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK],
+                [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK],
+                undefined
+            ],
             [undefined, undefined, undefined, undefined, undefined],
         ],
-        value: [ROAD_DIRECTION.UP],
+        value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.RIGHT]
     },
     {
         pattern: [
             [undefined, undefined, undefined, undefined, undefined],
+            [undefined, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD,                   TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined,                               TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
             [undefined, undefined, undefined, undefined, undefined],
-            [undefined, TILE_TYPES.SIDEWALK, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
-            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
-            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
         ],
-        value: [ROAD_DIRECTION.DOWN],
+        value: [ROAD_DIRECTION.DOWN, ROAD_DIRECTION.LEFT]
     },
     {
         pattern: [
             [undefined, undefined, undefined, undefined, undefined],
-            [undefined, undefined, TILE_TYPES.SIDEWALK, undefined, undefined],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
-            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined,       undefined,       TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined,       undefined,       TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+        ],
+        value: [ROAD_DIRECTION.DOWN, ROAD_DIRECTION.LEFT]
+    },
+    {
+        pattern: [
+            [undefined, undefined, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
             [undefined, undefined, undefined, undefined, undefined],
         ],
-        value: [ROAD_DIRECTION.LEFT],
+        value: [ROAD_DIRECTION.LEFT, ROAD_DIRECTION.UP]
+    },
+    {
+        pattern: [
+            [undefined, undefined, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.LEFT, ROAD_DIRECTION.UP]
     },
     {
         pattern: [
             [undefined, undefined, undefined, undefined, undefined],
-            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
-            [undefined, undefined, TILE_TYPES.SIDEWALK, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, [TILE_TYPES.GRASS,
+                TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.DOWN, ROAD_DIRECTION.RIGHT],
+    },
+    {
+        pattern: [
             [undefined, undefined, undefined, undefined, undefined],
+            [undefined, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, undefined,TILE_TYPES.ROAD,undefined,undefined],
+        ],
+        value: [ROAD_DIRECTION.DOWN, ROAD_DIRECTION.RIGHT],
+    },
+
+    {
+        pattern: [
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+        ],
+        value: [ROAD_DIRECTION.UP]
+    },
+    {
+        pattern: [
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+        ],
+        value: [ROAD_DIRECTION.UP]
+    },
+
+    {
+        pattern: [
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+        ],
+        value: [ROAD_DIRECTION.LEFT]
+    },
+    {
+        pattern: [
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+        ],
+        value: [ROAD_DIRECTION.LEFT]
+    },
+
+    {
+        pattern: [
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+        ],
+        value: [ROAD_DIRECTION.DOWN]
+    },
+    {
+        pattern: [
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+        ],
+        value: [ROAD_DIRECTION.DOWN]
+    },
+
+    {
+        pattern: [
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
         ],
         value: [ROAD_DIRECTION.RIGHT],
     },
+    {
+        pattern: [
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [[TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK], [TILE_TYPES.GRASS, TILE_TYPES.SIDEWALK]],
+        ],
+        value: [ROAD_DIRECTION.RIGHT],
+    },
+
+    // Straight road
+    {
+        pattern: [
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+            [undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.UP]
+    },
+    {
+        pattern: [
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+            [undefined, undefined, TILE_TYPES.ROAD, TILE_TYPES.ROAD, undefined],
+        ],
+        value: [ROAD_DIRECTION.DOWN]
+    },
+    {
+        pattern: [
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.LEFT]
+    },
+    {
+        pattern: [
+            [undefined, undefined, undefined, undefined, undefined],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD, TILE_TYPES.ROAD],
+            [undefined, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined],
+        ],
+        value: [ROAD_DIRECTION.RIGHT]
+    },
+
+    // {
+    //     pattern: [],
+    //     value: [ROAD_DIRECTION.UP, ROAD_DIRECTION.RIGHT]
+    // },
 ];
 
 class PatternMatcher {
@@ -282,15 +412,24 @@ class PatternMatcher {
                     const patternTile = pattern[dy + offset][dx + offset];
                     const mapTile = (map[tileY] && map[tileY][tileX]) || undefined;
 
-                    if (patternTile !== undefined && patternTile !== mapTile.type) {
-                        match = false;
-                        break;
+                    if (patternTile !== undefined) {
+                        if (Array.isArray(patternTile)) {
+                            if (!patternTile.includes(mapTile?.type)) {
+                                match = false;
+                                break;
+                            }
+                        } else if (patternTile !== mapTile?.type) {
+                            match = false;
+                            break;
+                        }
                     }
                 }
                 if (!match) break;
             }
 
-            if (match) return value;
+            if (match) {
+                return value;
+            }
         }
 
         return undefined;
