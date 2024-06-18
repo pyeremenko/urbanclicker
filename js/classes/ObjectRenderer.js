@@ -16,7 +16,8 @@ class ObjectRenderer {
                     const img = imageStorage[map[y][x].properties.imageSrc];
 
                     if (img) {
-                        const isoX = (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
+                        // TODO: extract this 200px shift
+                        const isoX = 200 + (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
                         const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
                         ctx.drawImage(img, isoX - 32, isoY - 137, 126, 200);
                     } else {

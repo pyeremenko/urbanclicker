@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const map = mapGenerator.generateBaseMap(NEIGHBORHOOD_COUNT);
         mapGenerator.fillMapMetadata(map);
 
-        canvas.width = map[0].length * TILE_SIZE.width + 100;
+        canvas.width = map[0].length * TILE_SIZE.width + 100 + 400; // TODO: extract this 400px shift
         canvas.height = map.length * TILE_SIZE.height + 100;
 
         mapRenderer.drawMap(ctx, map, imageStorage);

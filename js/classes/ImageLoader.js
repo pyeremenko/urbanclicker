@@ -25,6 +25,7 @@ class ImageLoader {
         });
 
         filenames.add('assets/objects/car.png');
+        filenames.add('assets/tiles/grass-alt.png');
 
         return Array.from(filenames);
     }

@@ -14,7 +14,8 @@ function animateTrip(canvas, ctx, map, imageStorage, mapRenderer, objectRenderer
 
             const halfTileWidth = tileSize.width / 2;
             const halfTileHeight = tileSize.height / 2;
-            const isoX = (car.position.x - car.position.y) * (halfTileWidth + 1) + (canvas.width / 2) - halfTileWidth;
+            // TODO: extract this 200px shift
+            const isoX = 200 + (car.position.x - car.position.y) * (halfTileWidth + 1) + (canvas.width / 2) - halfTileWidth;
             const isoY = (car.position.x + car.position.y) * (halfTileHeight / 2 + 8) + 25;
 
             const carImage = imageStorage['assets/objects/car.png'];

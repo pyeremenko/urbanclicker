@@ -32,7 +32,7 @@ class MapGenerator {
 
                 for (let k = 0; k < this.neighborhoodSize; k += 2) {
                     for (let l = 0; l < this.neighborhoodSize; l += 2) {
-                        if (Math.random() > 0.04) {
+                        if (Math.random() > 0.14) {
                             map[neighborhoodStartY + k][neighborhoodStartX + l] = this.cell(TILE_TYPES.NEIGHBORHOOD);
                         }
                     }
