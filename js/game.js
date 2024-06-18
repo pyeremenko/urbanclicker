@@ -4,8 +4,6 @@ import MapGenerator from "./classes/MapGenerator.js";
 import MapRenderer from './classes/MapRenderer.js';
 import ObjectRenderer from './classes/ObjectRenderer.js';
 import animateTrip from './trip.js';
-// import Pathfinding from './classes/Pathfinding.js';
-// import Car from './classes/Car.js';
 import { ROAD_DIRECTION_PATTERN_RULES, TILE_IMAGE_PATTERN_RULES, PatternMatcher } from './classes/PatternMatcher.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         mapRenderer.drawMap(map, imageStorage);
         objectRenderer.drawObjects(map, isoCanvas, imageStorage);
+
+        const gameWrapper = document.getElementById('game-container');
+        document.scrollingElement.scrollLeft = (canvas.width - gameWrapper.clientWidth) / 2;
 
         animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, {x: 10, y: 33}, {x: 21, y: 14});
     });

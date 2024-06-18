@@ -30,7 +30,6 @@ class Car {
     }
 
     getImage() {
-        console.log("Returning image", this.direction, this.images, this.images[this.direction]);
         return this.images[this.direction];
     }
 }
