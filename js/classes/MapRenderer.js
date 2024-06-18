@@ -1,16 +1,12 @@
 import {TILE_TYPES} from "./PatternMatcher.js";
 
 class MapRenderer {
-    constructor(tileSize, patternMatcher) {
-        this.tileSize = tileSize;
+    constructor(patternMatcher, isoCanvas) {
         this.patternMatcher = patternMatcher;
+        this.isoCanvas = isoCanvas;
     }
 
-    drawMap(ctx, map, imageStorage) {
-        ctx.imageSmoothingEnabled = false;
-        const halfTileWidth = this.tileSize.width / 2;
-        const halfTileHeight = this.tileSize.height / 2;
-
+    drawMap(map, imageStorage) {
         for (let y = 0; y < map.length; y++) {
             for (let x = 0; x < map[y].length; x++) {
                 const imgSrc = (map[y][x].type === TILE_TYPES.GRASS || map[y][x].type === TILE_TYPES.NOTHING) ?
@@ -18,14 +14,7 @@ class MapRenderer {
                     this.patternMatcher.matchPattern(map, x, y) ?? `assets/tiles/${map[y][x].type}.png`;
                 const img = imageStorage[imgSrc];
 
-                if (img) {
-                    // TODO: extract this 200px shift
-                    const isoX = 200 + (x - y) * (halfTileWidth + 1) + (ctx.canvas.width / 2) - halfTileWidth;
-                    const isoY = (x + y) * (halfTileHeight / 2 + 8) + 25;
-                    ctx.drawImage(img, isoX, isoY, this.tileSize.width, this.tileSize.height);
-                } else {
-                    console.error(`Missing image for source: ${imgSrc}`);
-                }
+                this.isoCanvas.draw(x, y, img);
             }
         }
     }

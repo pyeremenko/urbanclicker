@@ -97,7 +97,7 @@ class MapGenerator {
             }
             res = res + ss + "\n";
         }
-        console.log(res);
+        // console.log(res);
     }
 
     cell(cellType) {
