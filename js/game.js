@@ -47,6 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         mapRenderer.drawMap(map, imageStorage);
         objectRenderer.drawObjects(map, isoCanvas, imageStorage);
 
-        animateTrip(canvas, ctx, map, imageStorage, mapRenderer, objectRenderer, isoCanvas, {x: 18, y: 23}, {x: 21, y: 14});
+        animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, {x: 10, y: 33}, {x: 21, y: 14});
     });
 });

@@ -1,24 +1,37 @@
+import {Path} from "./Path.js";
+
 class Car {
-    constructor(initialPosition) {
+    constructor(initialPosition, images) {
         this.position = initialPosition;
-        this.path = [];
+        this.images = images;
+        this.path = new Path();
         this.currentStep = 0;
     }
 
     setPath(path) {
         this.path = path;
         this.currentStep = 0;
+        this.direction = this.path.getInitialDirection();
     }
 
     move() {
-        if (this.currentStep < this.path.length - 1) {
-            this.position = this.path[this.currentStep];
+        const pathSteps = this.path.getSteps();
+        if (this.currentStep < pathSteps.length - 1) {
+            this.position = pathSteps[this.currentStep];
             this.currentStep++;
+            this.direction = this.position.direction;
+        } else {
+            this.path = new Path();
         }
     }
 
     isAtDestination() {
-        return this.currentStep >= this.path.length - 1;
+        return this.currentStep >= this.path.getSteps().length - 1;
+    }
+
+    getImage() {
+        console.log("Returning image", this.direction, this.images, this.images[this.direction]);
+        return this.images[this.direction];
     }
 }
 

@@ -1,10 +1,15 @@
-import Pathfinding from "./classes/Pathfinding.js";
+import {Pathfinding} from "./classes/Path.js";
 import Car from "./classes/Car.js";
 
-function animateTrip(canvas, ctx, map, imageStorage, mapRenderer, objectRenderer, isoCanvas, from, to) {
+function animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, from, to) {
     const pathfinding = new Pathfinding(map);
     const path = pathfinding.findShortestPath(from, to);
-    const car = new Car(from);
+    const car = new Car(from, {
+        up: 'assets/objects/car-up.png',
+        right: 'assets/objects/car-right.png',
+        down: 'assets/objects/car-down.png',
+        left: 'assets/objects/car-left.png',
+    });
     car.setPath(path);
 
     function animate() {
@@ -12,11 +17,13 @@ function animateTrip(canvas, ctx, map, imageStorage, mapRenderer, objectRenderer
             car.move();
 
             mapRenderer.drawMap(map, imageStorage);
-            const carImage = imageStorage['assets/objects/car.png'];
+            const carImage = imageStorage[car.getImage()];
             isoCanvas.draw(car.position.x, car.position.y, carImage);
             objectRenderer.drawObjects(map, isoCanvas, imageStorage);
 
-            setTimeout(animate, 100);
+            if (!car.isAtDestination()) {
+                setTimeout(animate, 150);
+            }
         }
     }
 

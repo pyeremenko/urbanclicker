@@ -1,6 +1,24 @@
 import {ROAD_DIRECTION} from "./Road.js";
 import {TILE_TYPES} from "./PatternMatcher.js";
 
+class Path {
+    constructor() {
+        this.path = [];
+    }
+
+    setPath(path) {
+        this.path = path;
+    }
+
+    getSteps() {
+        return this.path;
+    }
+
+    getInitialDirection() {
+        return this.path[0].direction;
+    }
+}
+
 class Pathfinding {
     constructor(map) {
         this.map = map;
@@ -50,7 +68,7 @@ class Pathfinding {
             }
         }
 
-        return []; // Return an empty path if no path is found
+        return new Path(); // Return an empty path if no path is found
     }
 
     key(point) {
@@ -58,13 +76,15 @@ class Pathfinding {
     }
 
     reconstructPath(cameFrom, current) {
-        const path = [current];
+        const pathSteps = [current];
+        const path = new Path();
         while (cameFrom.has(this.key(current))) {
             current = cameFrom.get(this.key(current));
-            path.unshift(current);
+            pathSteps.unshift(current);
         }
+        path.setPath(pathSteps);
         return path;
     }
 }
 
-export default Pathfinding;
+export {Path, Pathfinding};
