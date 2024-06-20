@@ -49,5 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.scrollingElement.scrollLeft = (canvas.width - gameWrapper.clientWidth) / 2;
 
         animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, {x: 10, y: 33}, {x: 21, y: 14});
+
+        canvas.addEventListener('click', (event) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const mapCoords = isoCanvas.canvasToMapCoords(x, y);
+            console.log('Map Coordinates:', mapCoords);
+        });
+
     });
 });

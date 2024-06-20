@@ -80,24 +80,6 @@ class MapGenerator {
                 }
             }
         }
-
-        let res = "";
-        for (let y = 0; y < map.length; y++) {
-            let ss = "";
-            for (let x = 0; x < map[y].length; x++) {
-                const cell = map[y][x];
-                let current = "";
-                cell.properties.possibleDirections.forEach(direction => {
-                    current += direction[0];
-                });
-                if (current.length === 0) {
-                    current = ".";
-                }
-                ss += current.padEnd(4);
-            }
-            res = res + ss + "\n";
-        }
-        // console.log(res);
     }
 
     cell(cellType) {
