@@ -7,10 +7,14 @@ import animateTrip from './trip.js';
 import { ROAD_DIRECTION_PATTERN_RULES, TILE_IMAGE_PATTERN_RULES, PatternMatcher } from './classes/PatternMatcher.js';
 import {Config} from "./config.js";
 
-
 const imageLoader = new ImageLoader(Config.objectTypes);
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    const mapData = await initializeGame();
+    addEventListeners(mapData.canvas, mapData.map, mapData.isoCanvas);
+});
+
+async function initializeGame() {
     const imagePatternMatcher = new PatternMatcher(TILE_IMAGE_PATTERN_RULES);
     const directionPatternMatcher = new PatternMatcher(ROAD_DIRECTION_PATTERN_RULES);
     const mapGenerator = new MapGenerator(Config.map, directionPatternMatcher, Config.objectTypes);
@@ -18,10 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const map = mapGenerator.generateBaseMap(Config.map.neighborhoodCount);
 
     const canvas = document.getElementById('gameCanvas');
-    canvas.width = map[0].length * Config.drawing.tileSize.width + Config.drawing.canvasMargin + Config.drawing.extraWidth;
-    canvas.height = map.length * Config.drawing.tileSize.height + Config.drawing.canvasMargin;
+    setupCanvas(canvas, map);
     const ctx = canvas.getContext('2d');
-
     const isoCanvas = new IsometricCanvas(ctx, {
         tileSize: Config.drawing.tileSize,
         width: canvas.width,
@@ -29,28 +31,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const mapRenderer = new MapRenderer(imagePatternMatcher, isoCanvas);
-
     const filenames = imageLoader.collectFilenames();
+    await preloadImages(filenames);
 
-    imageLoader.preloadImages(filenames, () => {
-        const imageStorage = imageLoader.getImageStorage();
-        mapGenerator.fillMapMetadata(map);
+    const imageStorage = imageLoader.getImageStorage();
+    mapGenerator.fillMapMetadata(map);
+    mapRenderer.drawMap(map, imageStorage);
+    objectRenderer.drawObjects(map, isoCanvas, imageStorage);
+    centerGameOnScreen(canvas);
 
-        mapRenderer.drawMap(map, imageStorage);
-        objectRenderer.drawObjects(map, isoCanvas, imageStorage);
+    animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, { x: 10, y: 33 }, { x: 21, y: 14 });
 
-        const gameWrapper = document.getElementById('game-container');
-        document.scrollingElement.scrollLeft = (canvas.width - gameWrapper.clientWidth) / 2;
+    return { canvas, map, isoCanvas };
+}
 
-        animateTrip(map, imageStorage, mapRenderer, objectRenderer, isoCanvas, {x: 10, y: 33}, {x: 21, y: 14});
+function setupCanvas(canvas, map) {
+    canvas.width = map[0].length * Config.drawing.tileSize.width + Config.drawing.canvasMargin + Config.drawing.extraWidth;
+    canvas.height = map.length * Config.drawing.tileSize.height + Config.drawing.canvasMargin;
+}
 
-        canvas.addEventListener('click', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-
-            const mapCoords = isoCanvas.canvasToMapCoords(x, y);
-            console.log('Map Coordinates:', mapCoords);
+function preloadImages(filenames) {
+    return new Promise((resolve, reject) => {
+        imageLoader.preloadImages(filenames, () => {
+            resolve();
         });
     });
-});
+}
+
+function centerGameOnScreen(canvas) {
+    const gameWrapper = document.getElementById('game-container');
+    document.scrollingElement.scrollLeft = (canvas.width - gameWrapper.clientWidth) / 2;
+}
+
+function addEventListeners(canvas, map, isoCanvas) {
+    canvas.addEventListener('click', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const mapCoords = isoCanvas.canvasToMapCoords(x, y);
+        console.log('Map Coordinates:', mapCoords);
+    });
+}
